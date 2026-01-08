@@ -1,0 +1,24 @@
+{
+  "posts": [
+    { "id": "1", 
+    "title": "Whoever signed off England's tour has to go' - Agnew column",
+    "desc":"This has been my 10th tour covering England in Australia and has been, quite comfortably, the most   disappointing.Record numbers of people have come to watch, which illustrates the massive interest."
+  },
+    {
+      "id": "2",
+      "title": "Elon Musk's Grok AI appears to have made child sexual imagery, says charity",
+      "desc": "The Internet Watch Foundation (IWF) charity says its analysts have discovered criminal imagery of girls aged between 11 and 13 which appears to have been created using Grok."
+    },
+    {
+      "id": "3",
+      "title": "Vance criticises Denmark and Europe's handling of 'critical' Greenland",
+      "desc": "US Vice-President JD Vance says Greenland is \"critical\" for the defence of the US and the world against possible Russian or Chinese missile attacks - and that Europe and Denmark have \"not done a good job\" in securing the area."
+    }
+  ],
+  "users":[
+    {"id":"1","name":"Shadaf", "email":"1@gmail.com"},
+    {"id":"2","name":"test", "email":"test@gmail.com"},
+    {"id":"3","name":"hero", "email":"hero@yahoo.com"}
+  ]
+  
+}
