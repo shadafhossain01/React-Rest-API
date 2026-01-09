@@ -1,19 +1,19 @@
 import React, { useEffect, useState } from "react";
 
 const Users = () => {
-  const [users,setUsers]=useState([])
+  const [users, setUsers] = useState([]);
   const url = "http://localhost:3000/";
 
   // For Getting Data
-    async function fetchUser() {
-      await fetch(url + "users")
-        .then((res) => res.json())
-        .then((data) => setUsers(data));
-    }
+  async function fetchUser() {
+    await fetch(url + "users")
+      .then((res) => res.json())
+      .then((data) => setUsers(data));
+  }
 
-  useEffect(()=>{
-    fetchUser()
-  },[])
+  useEffect(() => {
+    fetchUser();
+  }, []);
 
   return (
     <div className="mt-[50px] grid grid-cols-4 gap-y-4 gap-x-5">
