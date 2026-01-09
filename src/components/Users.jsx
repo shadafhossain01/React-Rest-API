@@ -1,29 +1,29 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
+import { fetchUser, url } from "../api/UserApi";
 
-const Users = ({ func }) => {
-  const [users, setUsers] = useState([]);
-  const url = "http://localhost:3000/";
+const Users = ({ func,users,setUsers }) => {
 
   // For Getting User Data
-  async function fetchUser() {
-    await fetch(url + "users")
-      .then((res) => res.json())
-      .then((data) => setUsers(data));
-  }
-
   useEffect(() => {
-    fetchUser();
+    const loadUser=async()=>{
+     const data=await fetchUser();
+    setUsers(data)
+   }
+   loadUser()
   }, []);
 
   // For Delete User Data
-  async function fetchDelteUser(id) {
-    await fetch(url + "users/" + id, {
-      method: "DELETE",
-    }).then(() => {
-      alert("User Delete Sucessfully...");
-      fetchUser();
-    });
+async function fetchDelteUser(id) {
+  try {
+    await fetch(url + "users/" + id, { method: "DELETE" });
+    alert("User Deleted Successfully...");
+    const data = await fetchUser();
+    setUsers(data);
+  } catch (error) {
+    console.error(error);
+    alert("Failed to delete user");
   }
+}
 
   return (
     <div className="mt-[50px] grid grid-cols-4 gap-y-4 gap-x-5">

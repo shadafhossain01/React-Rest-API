@@ -1,20 +1,33 @@
 import React, { useState } from "react";
 import Users from "./Users";
+import { fetchUser, url } from "../api/UserApi";
 
 const UserList = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [editBtn,setEditBtn]=useState(false)
   const [userId,setUserId]=useState("")
-  const url = "http://localhost:3000/";
+  const [users, setUsers] = useState([]);
 
   // For Post Data
-  async function fetchPostUser() {
+async function fetchPostUser(e) {
+  e.preventDefault();
+
+  try {
     await fetch(url + "users", {
       method: "POST",
       body: JSON.stringify({ name, email }),
-    }).then(() => alert("User Added Sucessfully..."));
+    });
+    alert("User Added Successfully...");
+    const data = await fetchUser();
+    setUsers(data);
+    setName("");
+    setEmail("");
+  } catch (error) {
+    console.error(error);
+    alert("Failed to add user");
   }
+}
 
   // For Edit Data
   function editFunc (item){
@@ -24,13 +37,18 @@ const UserList = () => {
     setEmail(item.email)
   }
 
-   const editUser = async () => {
+   const editUser = async (e) => {
+    e.preventDefault()
      let response = await fetch(url + "users/" + userId, {
        method: "PUT",
        body: JSON.stringify({ name, email }),
      });
      if (response) {
        alert("User data updated");
+       const data= await fetchUser()
+       setUsers(data)
+       setName("");
+       setEmail("");
        setEditBtn(false)
      }
    };
@@ -66,6 +84,7 @@ const UserList = () => {
         </div>
         {editBtn ? (
           <button
+            type="submit"
             className="bg-[#11b811] px-[7px] h-[50px] rounded-[8px] cursor-pointer"
             onClick={editUser}
           >
@@ -73,14 +92,15 @@ const UserList = () => {
           </button>
         ) : (
           <button
-            className="bg-[#11b811] px-[7px] h-[50px] rounded-[8px] cursor-pointer"
+            type="submit"
             onClick={fetchPostUser}
+            className="bg-[#11b811] px-[7px] h-[50px] rounded-[8px] cursor-pointer"
           >
             Add User
           </button>
         )}
       </form>
-      <Users func={editFunc} />
+      <Users func={editFunc} users={users} setUsers={setUsers} />
     </div>
   );
 };
