@@ -1,19 +1,23 @@
 import React, { useState } from "react";
 import Posts from "./Posts";
+import { url } from "../api/UserApi";
+import { fetchPost } from "../api/PostApi";
 
 const PostList = () => {
   const [title,setTitle]=useState("")
   const [desc,setDesc]=useState("")
-  const url = "http://localhost:3000/posts";
+  const [posts, setPosts] = useState([]);
 
   const addPost=async(e)=>{
     e.preventDefault()
-    await fetch(url,{
+    await fetch(url+"posts",{
       method:"POST",
       body:JSON.stringify({title,desc})
     })
       setTitle("");
       setDesc("");
+      const data = await fetchPost()
+      setPosts(data)
   }
 
   return (
@@ -55,7 +59,7 @@ const PostList = () => {
           Add Post
         </button>
       </form>
-      <Posts />
+      <Posts posts={posts} setPosts={setPosts} />
     </div>
   );
 };

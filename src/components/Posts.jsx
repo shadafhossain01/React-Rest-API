@@ -1,18 +1,16 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { fetchPost } from "../api/PostApi";
 
-const Posts = () => {
-    const [posts,setPosts]=useState([])
+const Posts = ({posts,setPosts}) => {
   
     // For Getting Data
-    useEffect(()=>{
-    const loadPosts = async () => {
-      const data = await fetchPost();
-      setPosts(data);
-    };
-
-    loadPosts();
-    },[])
+    useEffect(() => {
+      const loadPosts = async () => {
+        const data = await fetchPost();
+        setPosts(data);
+      };
+      loadPosts();
+    }, []);
 
   return (
     <div className="mt-[50px] grid grid-cols-3 gap-y-4 gap-x-5">
