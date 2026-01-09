@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 
-const Users = () => {
+const Users = ({ func }) => {
   const [users, setUsers] = useState([]);
   const url = "http://localhost:3000/";
 
-  // For Getting Data
+  // For Getting User Data
   async function fetchUser() {
     await fetch(url + "users")
       .then((res) => res.json())
@@ -14,6 +14,16 @@ const Users = () => {
   useEffect(() => {
     fetchUser();
   }, []);
+
+  // For Delete User Data
+  async function fetchDelteUser(id) {
+    await fetch(url + "users/" + id, {
+      method: "DELETE",
+    }).then(() => {
+      alert("User Delete Sucessfully...");
+      fetchUser();
+    });
+  }
 
   return (
     <div className="mt-[50px] grid grid-cols-4 gap-y-4 gap-x-5">
@@ -33,10 +43,16 @@ const Users = () => {
             Email : {item.email}
           </h2>
           <div className="mt-[19px] flex gap-x-[15px]">
-            <button className="bg-[#11b811] px-[25px] py-3 rounded-[8px] cursor-pointer">
+            <button
+              className="bg-[#11b811] px-[25px] py-3 rounded-[8px] cursor-pointer"
+              onClick={() => func(item)}
+            >
               Edit
             </button>
-            <button className="bg-[#b81111] px-[25px] py-3  rounded-[8px] cursor-pointer text-white">
+            <button
+              className="bg-[#b81111] px-[25px] py-3  rounded-[8px] cursor-pointer text-white"
+              onClick={() => fetchDelteUser(item.id)}
+            >
               Delete
             </button>
           </div>
